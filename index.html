@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nadine Macapagal's Portfolio</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="view-toggle" role="group" aria-label="View mode">
+    <button class="view-toggle__grid is-active" type="button" aria-pressed="true">Grid</button>
+    <span class="view-toggle__sep" aria-hidden="true"> | </span>
+    <button class="view-toggle__single" type="button" aria-pressed="false">Single</button>
+  </div>
+
+  <div class="page-shell">
+    <header class="header">
+      <h1 class="site-title">
+        <button type="button" class="site-title__home" aria-label="Nadine Macapagal's Portfolio — home">
+          <span class="site-title__name">Nadine Macapagal's</span>
+          <span class="site-title__portfolio" aria-hidden="true">
+            <span class="letter">P</span><span class="letter">o</span><span class="letter">r</span><span class="letter">t</span><span class="letter">f</span><span class="letter">o</span><span class="letter">l</span><span class="letter">i</span><span class="letter">o</span>
+          </span>
+        </button>
+      </h1>
+      <nav class="site-nav" aria-label="Site navigation">
+        <a href="#information" class="nav-link nav-link--info" aria-label="Information">
+          <span class="nav-info__word" aria-hidden="true">
+            <span class="letter">I</span><span class="letter">n</span><span class="letter">f</span><span class="letter">o</span><span class="letter">r</span><span class="letter">m</span><span class="letter">a</span><span class="letter">t</span><span class="letter">i</span><span class="letter">o</span><span class="letter">n</span>
+          </span>
+        </a>
+        <a href="mailto:macapagalnadine@gmail.com" class="nav-link">Email</a>
+        <a href="movement.html" class="nav-link">Movement</a>
+      </nav>
+    </header>
+
+    <main class="main">
+      <section class="project-grid" aria-label="Projects">
+        <article class="project-card" data-project="objects-general">
+          <button type="button" class="project-card__hit" aria-label="Open Objects for General Use">
+            <div class="card-image">
+              <img src="thumbnails/Objects_General%20_1.jpg" alt="Objects for General Use">
+            </div>
+            <h2 class="card-title">Objects for General Use ➷</h2>
+            <p class="card-subtitle">Product, Editorial, Exhibition</p>
+
+          </button>
+        </article>
+        <article class="project-card" data-project="commencement">
+          <button type="button" class="project-card__hit" aria-label="Open Commencement">
+            <div class="card-image">
+              <video src="thumbnails/Commencement_1.mp4" muted loop playsinline autoplay></video>
+            </div>
+            <h2 class="card-title">RISD Commencement ☞</h2>
+            <p class="card-subtitle">Identity, Publication, Motion</p>
+          </button>
+        </article>
+        <article class="project-card" data-project="lg-reactions">
+          <button type="button" class="project-card__hit" aria-label="Open LG Reactions">
+            <div class="card-image">
+              <img src="thumbnails/LG_Reactions.jpg" alt="LG Reactions">
+            </div>
+            <h2 class="card-title">Lady Gaga’s MAYHEM BALL 🂠</h2>
+            <p class="card-subtitle">Identity, Motion, Product, Web, Stage </p>
+          </button>
+        </article>
+        <article class="project-card project-card--disabled" data-project="plain-sight">
+          <button type="button" class="project-card__hit" aria-label="Plain Sight — coming soon" disabled>
+            <div class="card-image">
+              <video src="thumbnails/PlainSight_1.mp4" muted loop playsinline autoplay></video>
+            </div>
+            <h2 class="card-title">In Plain Sight ⌕ </h2>
+            <p class="card-subtitle">Editorial, Publication</p>
+          </button>
+        </article>
+        <article class="project-card" data-project="tmi">
+          <button type="button" class="project-card__hit" aria-label="Open TMI">
+            <div class="card-image">
+              <video src="thumbnails/TMI_1.mp4" muted loop playsinline autoplay></video>
+            </div>
+            <h2 class="card-title">Too Much Information ⏱︎ </h2>
+              <p class="card-subtitle">Identity, Publication, Motion</p>
+
+          </button>
+        </article>
+        <article class="project-card" data-project="castle">
+          <button type="button" class="project-card__hit" aria-label="Open Castle">
+            <div class="card-image">
+              <img src="thumbnails/Castle_1.png" alt="Castle">
+            </div>
+            <h2 class="card-title">Castle ⛫</h2>
+            <p class="card-subtitle">Identity, Motion, Product, Web, Stage </p>
+
+          </button>
+        </article>
+        <article class="project-card project-card--disabled" data-project="risd-yearbook-2026">
+          <button type="button" class="project-card__hit" aria-label="RISD Yearbook 2026 — coming soon" disabled>
+            <div class="card-image">
+              <img src="thumbnails/YB_1.jpg" alt="RISD Yearbook 2026">
+            </div>
+            <h2 class="card-title">RISD Yearbook 2026 ⛰︎</h2>
+            <p class="card-subtitle">Editorial, Publication, Identity</p>
+          </button>
+        </article>
+        <article class="project-card project-card--disabled" data-project="sfmoma">
+          <button type="button" class="project-card__hit" aria-label="SFMOMA — coming soon" disabled>
+            <div class="card-image">
+              <img src="thumbnails/SFMOMA_1.png" alt="SFMOMA">
+            </div>
+            <h2 class="card-title">SFMOMA 𖡎 </h2>
+            <p class="card-subtitle">Identity, Editorial, Exhibition</p>
+          </button>
+        </article>
+      </section>
+
+      <section class="project-panel" id="project" aria-label="Project" aria-hidden="true">
+        <div class="project-gallery" tabindex="0" aria-label="Project images"></div>
+        <div class="project-meta">
+          <div class="project-meta__left">
+            <h2 class="project-meta__title"></h2>
+            <p class="project-meta__tags">
+              <span class="project-meta__categories"></span>
+            </p>
+          </div>
+          <div class="project-meta__right">
+            <p class="project-meta__desc"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="info-panel" id="information" aria-label="Information" aria-hidden="true">
+        <div class="info-columns">
+          <div class="info-col">
+            <p>
+              I am a designer and recent graduate of the RISD,
+               where I studied Graphic Design with a concentration in Computation 
+               (because naming things is part of the work). 
+               I approach graphic design as both a tool and a way of asking 
+               questions through&nbsp;form.
+            </p>
+          </div>
+          <div class="info-col">
+            <p>
+              I am currently at SFMOMA and have 
+              worked with RISD Design Guild, 
+              Yung Studio, Volume 1, and Problem Library (amongst other things).
+              I was named one of GDUSA’s Students to Watch 2026 and 
+              received the Joan E. Shewmon Memorial Scholarship in 2025.
+            </p>
+        
+          </div>
+          <div class="info-col">
+            <p>
+             I am always happy to talk about potential projects, 
+              large or small, speculative or concrete.
+
+            </p>
+            <p class="info-links">
+              <a href="thumbnails/Macapagal_Nadine_Resume_2026.pdf" target="_blank" rel="noopener noreferrer">Résumé</a>,
+              <a href="https://www.linkedin.com/in/nadine-macapagal/" target="_blank" rel="noopener noreferrer">LinkedIn</a>,
+              <a href="https://www.instagram.com/nadine.website/" target="_blank" rel="noopener noreferrer">Instagram</a><br>
+              <a href="mailto:macapagalnadine@gmail.com">macapagalnadine@gmail.com</a>
+            </p>
+          </div>
+        </div>
+        <p class="info-updated">This website was last updated in August&nbsp;2026</p>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
