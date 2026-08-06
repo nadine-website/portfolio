@@ -19,7 +19,7 @@ const PROJECTS = {
     description:
       "A collection of standardized objects presented as tools for general use. The project examines how systems of measurement, instruction, and handling shape our relationship to everyday objects.",
     media: [
-      { type: "image", src: "thumbnails/Objects_General%20_1.jpg", alt: "Objects for General Use" },
+      { type: "image", src: "thumbnails/Objects_General_1.jpg", alt: "Objects for General Use" },
       { type: "video", src: "thumbnails/objects_4.mov" },
       { type: "image", src: "thumbnails/Objects_2.jpg", alt: "Objects for General Use" },
       { type: "image", src: "thumbnails/objects_5.jpg", alt: "Objects for General Use" },
@@ -39,8 +39,8 @@ const PROJECTS = {
       { type: "image", src: "thumbnails/Commencement_7.png" },
       { type: "image", src: "thumbnails/commencement_4.png", alt: "Commencement" },
       { type: "image", src: "thumbnails/Commencement_3.png", alt: "Commencement" },
-      { type: "image", src: "thumbnails/Commencement_8.jpg" },
-      { type: "image", src: "thumbnails/Commencement_9.jpg" },
+      { type: "image", src: "thumbnails/commencement_8.jpg" },
+      { type: "image", src: "thumbnails/commencement_9.jpg" },
       { type: "video", src: "thumbnails/Commencement_5.mp4" },
 
       
@@ -55,9 +55,11 @@ const PROJECTS = {
       { type: "image", src: "thumbnails/LG_Reactions.jpg", alt: "LG Reactions" },
       { type: "video", src: "thumbnails/LG_5.mp4" },
       { type: "image", src: "thumbnails/LG_3.png", alt: "LG Reactions" },
-      { type: "image", src: "thumbnails/LG_6.png", alt: "LG Reactions" },
+      { type: "video", src: "thumbnails/LG_10.mp4", alt: "LG Reactions" },
       { type: "image", src: "thumbnails/LG_7.webp", alt: "LG Reactions" },
       { type: "video", src: "thumbnails/LG_8.mp4" },
+      { type: "image", src: "thumbnails/LG_6.png", alt: "LG Reactions" },
+
     ],
   },
   "plain-sight": {
@@ -93,7 +95,7 @@ Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appoi
       { type: "image", src: "thumbnails/Castle_1.png", alt: "Castle" },
       { type: "image", src: "thumbnails/castle_2.png", alt: "Castle" },
       { type: "video", src: "thumbnails/castle_3.mp4" },
-      { type: "image", src: "thumbnails/castle_6.jpg" },
+      { type: "image", src: "thumbnails/Castle_6.jpg" },
 
       { type: "image", src: "thumbnails/castle_4.png" },
       { type: "image", src: "thumbnails/castle_7.png" },
