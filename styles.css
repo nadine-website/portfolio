@@ -141,15 +141,19 @@ body.is-project .page-shell {
   width: 100%;
 }
 
-.nav-link:hover {
-  color: #0000ee;
-}
-
 .nav-link:visited,
 .nav-link.is-active,
 .nav-link[aria-current="page"] {
   color: #000;
   font-style: normal;
+}
+
+.nav-link:hover,
+.nav-link:visited:hover,
+.nav-link.is-active:hover,
+.nav-link[aria-current="page"]:hover,
+.nav-link:focus-visible {
+  color: #0000ee;
 }
 
 .nav-link--info {
@@ -509,11 +513,42 @@ body.is-info .info-panel {
   pointer-events: none;
 }
 
+.main--movement {
+  width: 100%;
+  padding-bottom: clamp(2rem, 6vh, 4rem);
+}
+
+.movement-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.45rem, 1vw, 0.75rem);
+  width: 100%;
+  align-items: start;
+}
+
+.movement-grid__item {
+  min-width: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+.movement-grid__item video,
+.movement-grid__item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
 @media (max-width: 800px) {
   .info-columns {
     grid-template-columns: 1fr;
     max-width: 36rem;
     margin-inline: auto;
+  }
+
+  .movement-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -525,6 +560,10 @@ body.is-info .info-panel {
 
   .project-grid.is-single {
     max-width: min(100%, 92vw);
+  }
+
+  .movement-grid {
+    grid-template-columns: 1fr;
   }
 }
 

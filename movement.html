@@ -6,31 +6,51 @@
   <title>Movement — Nadine Macapagal's Portfolio</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="is-movement">
   <div class="page-shell">
     <header class="header">
       <h1 class="site-title">
-        <a href="index.html" class="site-title__home">
+        <a href="index.html" class="site-title__home" aria-label="Nadine Macapagal's Portfolio — home">
           <span class="site-title__name">Nadine Macapagal's</span>
-          <span class="site-title__portfolio" aria-label="Portfolio">
+          <span class="site-title__portfolio" aria-hidden="true">
             <span class="letter">P</span><span class="letter">o</span><span class="letter">r</span><span class="letter">t</span><span class="letter">f</span><span class="letter">o</span><span class="letter">l</span><span class="letter">i</span><span class="letter">o</span>
           </span>
         </a>
       </h1>
       <nav class="site-nav" aria-label="Site navigation">
-        <a href="information.html" class="nav-link nav-link--info" aria-label="Information">
+        <a href="index.html#information" class="nav-link nav-link--info" aria-label="Information">
           <span class="nav-info__word" aria-hidden="true">
             <span class="letter">I</span><span class="letter">n</span><span class="letter">f</span><span class="letter">o</span><span class="letter">r</span><span class="letter">m</span><span class="letter">a</span><span class="letter">t</span><span class="letter">i</span><span class="letter">o</span><span class="letter">n</span>
           </span>
         </a>
-        <a href="mailto:" class="nav-link">Email</a>
+        <a href="mailto:macapagalnadine@gmail.com" class="nav-link">Email</a>
         <a href="movement.html" class="nav-link is-active" aria-current="page">Movement</a>
       </nav>
     </header>
 
-    <main class="main main--page">
-      <section class="page-content" aria-label="Movement">
-        <p>Movement page content goes here.</p>
+    <main class="main main--movement">
+      <section class="movement-grid" aria-label="Movement">
+        <div class="movement-grid__item">
+          <video src="thumbnails/Movement/AmazingThings.mp4" muted loop playsinline autoplay></video>
+        </div>
+        <div class="movement-grid__item">
+          <img src="thumbnails/Movement/Grains_Ocean.gif" alt="Grains Ocean">
+        </div>
+        <div class="movement-grid__item">
+          <video src="thumbnails/Movement/Merch_Teaser.mp4" muted loop playsinline autoplay></video>
+        </div>
+        <div class="movement-grid__item">
+          <video src="thumbnails/Movement/RISDBROWN.mp4" muted loop playsinline autoplay></video>
+        </div>
+        <div class="movement-grid__item">
+          <video src="thumbnails/Movement/SaloSalo.mp4" muted loop playsinline autoplay></video>
+        </div>
+        <div class="movement-grid__item">
+          <video src="thumbnails/Movement/Spiral_Browser.mp4" muted loop playsinline autoplay></video>
+        </div>
+        <div class="movement-grid__item">
+          <video src="thumbnails/Movement/Yearbook_flag.mp4" muted loop playsinline autoplay></video>
+        </div>
       </section>
     </main>
   </div>
