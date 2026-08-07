@@ -75,12 +75,11 @@ const PROJECTS = {
     description: `Too Much Information (TMI) is an intergenerational event series centered on shared learning. Daniel Lucas and I have designed its visual identity since the beginning, most recently extending it across the program, print materials, merchandise, and website for its third iteration on ritual and the magic of trusting simple things.`,
     media: [
       { type: "image", src: "thumbnails/TMI_5.jpg", alt: "TMI" },
+      { type: "image", src: "thumbnails/TMI_10.png", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_6.jpg", alt: "TMI" },
       { type: "video", src: "thumbnails/TMI_9.mp4", alt: "TMI" },
-      { type: "image", src: "thumbnails/TMI_10.png", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_7.jpg", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_4.png", alt: "TMI" },
-
       { type: "image", src: "thumbnails/TMI_3.png", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_8.png", alt: "TMI" },
     ],
