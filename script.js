@@ -36,6 +36,7 @@ const PROJECTS = {
     media: [
       { type: "video", src: "thumbnails/Commencement_1.mp4" },
       { type: "video", src: "thumbnails/commencement_2.mp4" },
+      { type: "video", src: "thumbnails/commencement_6.mp4" },
       { type: "image", src: "thumbnails/Commencement_7.png" },
       { type: "image", src: "thumbnails/commencement_4.png", alt: "Commencement" },
       { type: "image", src: "thumbnails/Commencement_3.png", alt: "Commencement" },
@@ -95,7 +96,6 @@ Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appoi
       { type: "image", src: "thumbnails/castle_2.png", alt: "Castle" },
       { type: "video", src: "thumbnails/castle_3.mp4" },
       { type: "image", src: "thumbnails/Castle_6.jpg" },
-
       { type: "image", src: "thumbnails/castle_4.png" },
       { type: "image", src: "thumbnails/castle_7.png" },
 
@@ -105,8 +105,15 @@ Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appoi
   "risd-yearbook-2026": {
     title: "RISD Yearbook 2026 ⛰︎",
     categories: "Editorial, Publication, Identity",
-    description: "The Class of 2026 yearbook is a companion for wandering...",
-    media: [{ type: "image", src: "thumbnails/YB_1.jpg", alt: "yearbook" }],
+    description: "Built around the idea of a companion for wandering, the yearbook follows graduating students as they move beyond RISD and into what comes next. I helped develop its creative identity and direction, shaping how the theme came to life through the book’s imagery, editorial approach, and photography.",
+    media: [
+      { type: "image", src: "thumbnails/YB_2.png", alt: "RISD Yearbook 2026" },
+      { type: "image", src: "thumbnails/YB_5.jpg", alt: "RISD Yearbook 2026" },
+      { type: "video", src: "thumbnails/YB_1.mp4", alt: "RISD Yearbook 2026" },
+      { type: "image", src: "thumbnails/YB_1.jpg", alt: "RISD Yearbook 2026" },
+      { type: "image", src: "thumbnails/YB_3.jpg", alt: "RISD Yearbook 2026" },
+      { type: "image", src: "thumbnails/YB_4.jpg", alt: "RISD Yearbook 2026" },
+    ],
   },
   sfmoma: {
     title: "SFMOMA 𖡎",
@@ -209,62 +216,11 @@ function onWheelSmoothScroll(event) {
     const dominant =
       Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
     projectGallery.scrollLeft += dominant * PROJECT_GALLERY_SCROLL_SPEED;
-    return;
   }
-
-  if (!motionEnabled || isInfoMode) return;
-
-  event.preventDefault();
-  scrollTarget = clamp(scrollTarget + event.deltaY, 0, getMaxScroll());
-  requestSmoothScrollTick();
-}
-
-function onKeySmoothScroll(event) {
-  if (!motionEnabled || isOverlayMode()) return;
-
-  const page = window.innerHeight * 0.9;
-  let delta = 0;
-
-  switch (event.key) {
-    case "ArrowDown":
-      delta = 60;
-      break;
-    case "ArrowUp":
-      delta = -60;
-      break;
-    case "PageDown":
-      delta = page;
-      break;
-    case "PageUp":
-      delta = -page;
-      break;
-    case "Home":
-      event.preventDefault();
-      setScrollPosition(0);
-      requestSmoothScrollTick();
-      return;
-    case "End":
-      event.preventDefault();
-      setScrollPosition(getMaxScroll());
-      requestSmoothScrollTick();
-      return;
-    case " ":
-      delta = event.shiftKey ? -page : page;
-      break;
-    default:
-      return;
-  }
-
-  event.preventDefault();
-  scrollTarget = clamp(scrollTarget + delta, 0, getMaxScroll());
-  requestSmoothScrollTick();
 }
 
 if (true) {
   window.addEventListener("wheel", onWheelSmoothScroll, { passive: false });
-  if (motionEnabled) {
-    window.addEventListener("keydown", onKeySmoothScroll);
-  }
 }
 
 function getScrollProgress() {
