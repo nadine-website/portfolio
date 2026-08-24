@@ -35,13 +35,14 @@ const PROJECTS = {
     description:
       "Inspired by the gestures of overlap and shared making. Threads, hands, and objects weave together RISD’s cross-disciplinary spirit and celebrate the craft that connects us all. Designed with Li Huang and Minah Kim in collaboration with RISD Marcom team. Special thanks to Alexis Ghansah for lending us her hands!",
     media: [
-      { type: "video", src: "thumbnails/Commencement_1.mp4" },
-      { type: "video", src: "thumbnails/commencement_2.mp4" },
-      { type: "video", src: "thumbnails/commencement_6.mp4" },
+      { type: "image", src: "thumbnails/Commencement_1.jpg" },
+      { type: "video", src: "thumbnails/Commencement_2.mp4" },
+      { type: "video", src: "thumbnails/Commencement_6.mp4" },
+      { type: "image", src: "thumbnails/commencement_10.jpg" },
       { type: "image", src: "thumbnails/Commencement_7.png" },
+      { type: "image", src: "thumbnails/commencement_8.jpg" },
       { type: "image", src: "thumbnails/commencement_4.png", alt: "Commencement" },
       { type: "image", src: "thumbnails/Commencement_3.png", alt: "Commencement" },
-      { type: "image", src: "thumbnails/commencement_8.jpg" },
       { type: "image", src: "thumbnails/commencement_9.jpg" },
       { type: "video", src: "thumbnails/Commencement_5.mp4" },
 
