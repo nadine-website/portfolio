@@ -7,6 +7,7 @@ const projectGallery = document.querySelector(".project-gallery");
 const projectTitle = document.querySelector(".project-meta__title");
 const projectCategories = document.querySelector(".project-meta__categories");
 const projectDesc = document.querySelector(".project-meta__desc");
+const projectLinks = document.querySelector(".project-meta__links");
 const infoLink = document.querySelector(".nav-link--info");
 const homeButton = document.querySelector(".site-title__home");
 const portfolioLetters = document.querySelectorAll(".site-title__portfolio .letter");
@@ -55,6 +56,8 @@ const PROJECTS = {
     media: [
       { type: "image", src: "thumbnails/LG_Reactions.jpg", alt: "LG Reactions" },
       { type: "video", src: "thumbnails/LG_5.mp4" },
+      { type: "video", src: "thumbnails/LG_12.mp4", alt: "LG Reactions" },
+      { type: "image", src: "thumbnails/LG_11.webp", alt: "LG Reactions" },
       { type: "image", src: "thumbnails/LG_3.png", alt: "LG Reactions" },
       { type: "video", src: "thumbnails/LG_10.mp4", alt: "LG Reactions" },
       { type: "image", src: "thumbnails/LG_7.webp", alt: "LG Reactions" },
@@ -74,11 +77,24 @@ const PROJECTS = {
     title: "Too Much Information ⏱︎",
     categories: "Identity, Publication, Motion",
     description: `Too Much Information (TMI) is an intergenerational event series centered on shared learning. Daniel Lucas and I have designed its visual identity since the beginning, most recently extending it across the program, print materials, merchandise, and website for its third iteration on ritual and the magic of trusting simple things.`,
+    links: [
+      {
+        before: "Visit TMI: ",
+        href: "https://toomuchinformation.info/",
+        text: "toomuchinformation.info",
+      },
+      {
+        before: "Learn more about programming: ",
+        href: "https://problemlibrary.org/",
+        text: "problemlibrary.org",
+      },
+    ],
     media: [
       { type: "image", src: "thumbnails/TMI_5.jpg", alt: "TMI" },
-      { type: "image", src: "thumbnails/TMI_10.png", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_6.jpg", alt: "TMI" },
+      { type: "image", src: "thumbnails/TMI_10.png", alt: "TMI" },
       { type: "video", src: "thumbnails/TMI_9.mp4", alt: "TMI" },
+      { type: "image", src: "thumbnails/TMI_11.jpg", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_7.jpg", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_4.png", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_3.png", alt: "TMI" },
@@ -87,7 +103,7 @@ const PROJECTS = {
   },
   castle: {
     title: "Castle",
-    categories: "Identity, Image-making",
+    categories: "Identity, logomark",
     description: `Castle curates furniture, art, and objects that bring character unexpected delight to the home. Its identity centers on a bespoke typeface inspired by Irish letterforms, balancing tradition with a contemporary sensibility. Photography by Danica Taylor.
 
 Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appointments.`,
@@ -106,6 +122,13 @@ Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appoi
     title: "RISD Yearbook 2026 ⛰︎",
     categories: "Editorial, Publication, Identity",
     description: "Built around the idea of a companion for wandering, the yearbook follows graduating students as they move beyond RISD and into what comes next. I helped develop its creative identity and direction, shaping how the theme came to life through the book’s imagery, editorial approach, and photography.",
+    links: [
+      {
+        before: "Designed with the ",
+        href: "https://www.risdguild.com/",
+        text: "RISD Design Guild",
+      },
+    ],
     media: [
       { type: "image", src: "thumbnails/YB_2.png", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_5.jpg", alt: "RISD Yearbook 2026" },
@@ -343,6 +366,40 @@ function configureAutoplayVideo(video) {
   }
 }
 
+function renderProjectLinks(project) {
+  if (!projectLinks) return;
+
+  projectLinks.innerHTML = "";
+
+  const hasCredit = Boolean(project.credit);
+  const hasLinks = Boolean(project.links && project.links.length);
+
+  if (!hasCredit && !hasLinks) {
+    projectLinks.hidden = true;
+    return;
+  }
+
+  if (hasCredit) {
+    projectLinks.appendChild(document.createTextNode(project.credit));
+  }
+
+  if (hasLinks) {
+    project.links.forEach((link, index) => {
+      if (hasCredit || index > 0) projectLinks.appendChild(document.createElement("br"));
+      if (link.before) projectLinks.appendChild(document.createTextNode(link.before));
+
+      const anchor = document.createElement("a");
+      anchor.href = link.href;
+      anchor.textContent = link.text || link.href;
+      anchor.target = "_blank";
+      anchor.rel = "noopener noreferrer";
+      projectLinks.appendChild(anchor);
+    });
+  }
+
+  projectLinks.hidden = false;
+}
+
 function renderProjectMedia(project) {
   if (!projectGallery) return;
   projectGallery.innerHTML = "";
@@ -393,6 +450,7 @@ function openProject(projectId) {
   if (projectTitle) projectTitle.textContent = project.title;
   if (projectCategories) projectCategories.textContent = project.categories;
   if (projectDesc) projectDesc.textContent = project.description;
+  renderProjectLinks(project);
   renderProjectMedia(project);
 
   document.title = `${project.title} — Nadine Macapagal's Portfolio`;
@@ -410,6 +468,10 @@ function closeProject() {
   document.documentElement.classList.remove("is-project");
   if (projectPanel) projectPanel.setAttribute("aria-hidden", "true");
   if (projectGallery) projectGallery.innerHTML = "";
+  if (projectLinks) {
+    projectLinks.innerHTML = "";
+    projectLinks.hidden = true;
+  }
 
   document.title = "Nadine Macapagal's Portfolio";
   history.replaceState(null, "", window.location.pathname + window.location.search);
