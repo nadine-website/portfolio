@@ -143,7 +143,17 @@ Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appoi
     title: "SFMOMA 𖡎",
     categories: "Identity, Editorial, Exhibition",
     description: "Work for the San Francisco Museum of Modern Art.",
-    media: [{ type: "image", src: "thumbnails/SFMOMA_1.png", alt: "SFMOMA" }],
+    media: [
+      { type: "image", src: "thumbnails/sfmoma_5.jpg", alt: "SFMOMA" },
+      { type: "image", src: "thumbnails/sfmoma_2.jpg", alt: "SFMOMA" },
+
+      { type: "image", src: "thumbnails/sfmoma_1.jpg", alt: "SFMOMA" },
+      { type: "image", src: "thumbnails/sfmoma_8.png", alt: "SFMOMA" },
+
+      { type: "image", src: "thumbnails/sfmoma_4.jpg", alt: "SFMOMA" },
+      { type: "image", src: "thumbnails/sfmoma_7.jpg", alt: "SFMOMA" },
+      { type: "image", src: "thumbnails/sfmoma_9.png", alt: "SFMOMA" },
+    ],
   },
 };
 
@@ -653,3 +663,49 @@ if (window.location.hash === "#information" || window.location.hash.startsWith("
 }
 
 document.querySelectorAll("video").forEach(configureAutoplayVideo);
+
+function waitForGridMedia(el) {
+  if (el.tagName === "IMG") {
+    if (el.complete && el.naturalWidth > 0) return Promise.resolve();
+    return new Promise((resolve) => {
+      el.addEventListener("load", resolve, { once: true });
+      el.addEventListener("error", resolve, { once: true });
+    });
+  }
+
+  if (el.tagName === "VIDEO") {
+    if (el.readyState >= 2) return Promise.resolve();
+    return new Promise((resolve) => {
+      el.addEventListener("loadeddata", resolve, { once: true });
+      el.addEventListener("error", resolve, { once: true });
+    });
+  }
+
+  return Promise.resolve();
+}
+
+function revealHomepageWhenGridReady() {
+  const gridMedia = document.querySelectorAll(".project-grid .card-image img, .project-grid .card-image video");
+  if (!gridMedia.length) {
+    document.body.classList.remove("is-loading");
+    return;
+  }
+
+  const loader = document.querySelector(".page-loader");
+  const timeout = new Promise((resolve) => setTimeout(resolve, 8000));
+
+  Promise.race([
+    Promise.all([...gridMedia].map(waitForGridMedia)),
+    timeout,
+  ]).then(() => {
+    document.body.classList.remove("is-loading");
+    if (loader) {
+      loader.setAttribute("aria-busy", "false");
+      window.setTimeout(() => {
+        loader.hidden = true;
+      }, 700);
+    }
+  });
+}
+
+revealHomepageWhenGridReady();

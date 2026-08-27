@@ -7,7 +7,8 @@
   <link rel="icon" href="favicon-nadine.png?v=3" type="image/png">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="is-loading">
+  <div class="page-loader" aria-live="polite" aria-busy="true">Loading</div>
   <div class="view-toggle" role="group" aria-label="View mode">
     <button class="view-toggle__grid is-active" type="button" aria-pressed="true">Grid</button>
     <span class="view-toggle__sep" aria-hidden="true"> | </span>
@@ -103,8 +104,8 @@
 
           </button>
         </article>
-        <article class="project-card project-card--disabled" data-project="sfmoma">
-          <button type="button" class="project-card__hit" aria-label="SFMOMA — coming soon" disabled>
+        <article class="project-card" data-project="sfmoma">
+          <button type="button" class="project-card__hit" aria-label="Open SFMOMA">
             <div class="card-image">
               <img src="thumbnails/SFMOMA_1.png" alt="SFMOMA">
             </div>
