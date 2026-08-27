@@ -4,12 +4,16 @@ function configureAutoplayVideo(video) {
   video.loop = true;
   video.playsInline = true;
   video.autoplay = true;
-  video.setAttribute("muted", "");
-  video.setAttribute("playsinline", "");
+  video.controls = false;
+  video.setAttribute("muted", "true");
+  video.setAttribute("playsinline", "true");
+  video.setAttribute("webkit-playsinline", "true");
   video.setAttribute("loop", "");
   video.setAttribute("autoplay", "");
+  video.removeAttribute("controls");
 
   const tryPlay = () => {
+    video.muted = true;
     const playPromise = video.play();
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => {});
@@ -20,7 +24,19 @@ function configureAutoplayVideo(video) {
     tryPlay();
   } else {
     video.addEventListener("loadeddata", tryPlay, { once: true });
+    video.addEventListener("canplay", tryPlay, { once: true });
   }
 }
 
 document.querySelectorAll("video").forEach(configureAutoplayVideo);
+
+document.addEventListener(
+  "touchstart",
+  () => {
+    document.querySelectorAll("video").forEach((video) => {
+      video.muted = true;
+      video.play().catch(() => {});
+    });
+  },
+  { once: true, passive: true }
+);

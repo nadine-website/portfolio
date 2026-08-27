@@ -131,9 +131,10 @@ Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appoi
       },
     ],
     media: [
+      { type: "video", src: "thumbnails/YB_1.mp4", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_2.png", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_5.jpg", alt: "RISD Yearbook 2026" },
-      { type: "video", src: "thumbnails/YB_1.mp4", alt: "RISD Yearbook 2026" },
+      { type: "image", src: "thumbnails/YB_6.jpg", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_1.jpg", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_3.jpg", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_4.jpg", alt: "RISD Yearbook 2026" },
@@ -143,6 +144,7 @@ Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appoi
     title: "SFMOMA 𖡎",
     categories: "Identity, Editorial, Exhibition",
     description: "Work for the San Francisco Museum of Modern Art.",
+    live: false,
     media: [
       { type: "image", src: "thumbnails/sfmoma_5.jpg", alt: "SFMOMA" },
       { type: "image", src: "thumbnails/sfmoma_2.jpg", alt: "SFMOMA" },
@@ -179,9 +181,36 @@ let scrollTarget = window.scrollY;
 let scrollCurrent = window.scrollY;
 let smoothScrollRaf = null;
 let ignoreNativeScroll = false;
+let hasPushedOverlayState = false;
 
 function isOverlayMode() {
   return isInfoMode || isProjectMode;
+}
+
+function getRouteFromHash() {
+  const hash = window.location.hash;
+
+  if (hash === "#information") {
+    return { view: "info" };
+  }
+
+  const projectMatch = hash.match(/^#project\/(.+)$/);
+  if (projectMatch && PROJECTS[projectMatch[1]]) {
+    return { view: "project", projectId: projectMatch[1] };
+  }
+
+  return { view: "home" };
+}
+
+function historyBackOrHome() {
+  if (hasPushedOverlayState) {
+    hasPushedOverlayState = false;
+    history.back();
+    return;
+  }
+
+  history.replaceState({ view: "home" }, "", window.location.pathname + window.location.search);
+  syncFromHash();
 }
 
 function easeInOutSine(t) {
@@ -358,12 +387,18 @@ function configureAutoplayVideo(video) {
   video.loop = true;
   video.playsInline = true;
   video.autoplay = true;
-  video.setAttribute("muted", "");
-  video.setAttribute("playsinline", "");
+  video.controls = false;
+  video.disablePictureInPicture = true;
+  video.setAttribute("muted", "true");
+  video.setAttribute("playsinline", "true");
+  video.setAttribute("webkit-playsinline", "true");
   video.setAttribute("loop", "");
   video.setAttribute("autoplay", "");
+  video.setAttribute("x-webkit-airplay", "deny");
+  video.removeAttribute("controls");
 
   const tryPlay = () => {
+    video.muted = true;
     const playPromise = video.play();
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => {});
@@ -374,7 +409,55 @@ function configureAutoplayVideo(video) {
     tryPlay();
   } else {
     video.addEventListener("loadeddata", tryPlay, { once: true });
+    video.addEventListener("canplay", tryPlay, { once: true });
   }
+
+  observeAutoplayVideo(video);
+}
+
+function playAllVideos() {
+  document.querySelectorAll("video").forEach((video) => {
+    video.muted = true;
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => {});
+    }
+  });
+}
+
+let videosUnlocked = false;
+
+function unlockVideosOnGesture() {
+  if (videosUnlocked) return;
+  videosUnlocked = true;
+  playAllVideos();
+}
+
+document.addEventListener("touchstart", unlockVideosOnGesture, { once: true, passive: true });
+document.addEventListener("click", unlockVideosOnGesture, { once: true });
+
+const videoObserver =
+  typeof IntersectionObserver !== "undefined"
+    ? new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            const video = entry.target;
+            video.muted = true;
+            const playPromise = video.play();
+            if (playPromise && typeof playPromise.catch === "function") {
+              playPromise.catch(() => {});
+            }
+          });
+        },
+        { threshold: 0.2 }
+      )
+    : null;
+
+function observeAutoplayVideo(video) {
+  if (!videoObserver || video.dataset.autoplayObserved === "true") return;
+  video.dataset.autoplayObserved = "true";
+  videoObserver.observe(video);
 }
 
 function renderProjectLinks(project) {
@@ -411,9 +494,34 @@ function renderProjectLinks(project) {
   projectLinks.hidden = false;
 }
 
-function renderProjectMedia(project) {
+function waitForMedia(el) {
+  if (el.tagName === "IMG") {
+    if (el.complete && el.naturalWidth > 0) return Promise.resolve();
+    return new Promise((resolve) => {
+      el.addEventListener("load", resolve, { once: true });
+      el.addEventListener("error", resolve, { once: true });
+    });
+  }
+
+  if (el.tagName === "VIDEO") {
+    if (el.readyState >= 2) return Promise.resolve();
+    return new Promise((resolve) => {
+      el.addEventListener("loadeddata", resolve, { once: true });
+      el.addEventListener("error", resolve, { once: true });
+    });
+  }
+
+  return Promise.resolve();
+}
+
+function renderProjectMedia(project, projectId) {
   if (!projectGallery) return;
+
+  const loadId = projectId || currentProjectId;
+  projectGallery.classList.add("is-loading");
   projectGallery.innerHTML = "";
+
+  const mediaElements = [];
 
   project.media.forEach((item) => {
     const wrap = document.createElement("div");
@@ -421,25 +529,38 @@ function renderProjectMedia(project) {
 
     if (item.type === "video") {
       const video = document.createElement("video");
-      video.src = item.src;
+      video.preload = "auto";
       configureAutoplayVideo(video);
+      video.src = item.src;
       wrap.appendChild(video);
+      mediaElements.push(video);
     } else {
       const img = document.createElement("img");
       img.src = item.src;
       img.alt = item.alt || project.title;
       wrap.appendChild(img);
+      mediaElements.push(img);
     }
 
     projectGallery.appendChild(wrap);
   });
 
   projectGallery.scrollLeft = 0;
+
+  const timeout = new Promise((resolve) => setTimeout(resolve, 10000));
+
+  Promise.race([Promise.all(mediaElements.map(waitForMedia)), timeout]).then(() => {
+    if (currentProjectId !== loadId || !isProjectMode) return;
+    projectGallery.classList.remove("is-loading");
+    mediaElements.forEach((el) => {
+      if (el.tagName === "VIDEO") configureAutoplayVideo(el);
+    });
+  });
 }
 
-function openProject(projectId) {
+function openProject(projectId, { fromHistory = false } = {}) {
   const project = PROJECTS[projectId];
-  if (!project || !projectPanel) return;
+  if (!project || !projectPanel || project.live === false) return;
 
   if (isInfoMode) {
     isInfoMode = false;
@@ -462,39 +583,62 @@ function openProject(projectId) {
   if (projectCategories) projectCategories.textContent = project.categories;
   if (projectDesc) projectDesc.textContent = project.description;
   renderProjectLinks(project);
-  renderProjectMedia(project);
+  renderProjectMedia(project, projectId);
 
   document.title = `${project.title} — Nadine Macapagal's Portfolio`;
-  history.replaceState(null, "", `#project/${projectId}`);
+
+  const nextHash = `#project/${projectId}`;
+  if (!fromHistory && window.location.hash !== nextHash) {
+    history.pushState({ view: "project", projectId }, "", nextHash);
+    hasPushedOverlayState = true;
+  }
+
   setScrollPosition(0, true);
   animateDecorative(1);
 }
 
-function closeProject() {
+function closeProject({ fromHistory = false } = {}) {
   if (!isProjectMode) return;
+
+  if (!fromHistory && window.location.hash.startsWith("#project/")) {
+    historyBackOrHome();
+    return;
+  }
 
   isProjectMode = false;
   currentProjectId = null;
   document.body.classList.remove("is-project");
   document.documentElement.classList.remove("is-project");
   if (projectPanel) projectPanel.setAttribute("aria-hidden", "true");
-  if (projectGallery) projectGallery.innerHTML = "";
+  if (projectGallery) {
+    projectGallery.innerHTML = "";
+    projectGallery.classList.remove("is-loading");
+  }
   if (projectLinks) {
     projectLinks.innerHTML = "";
     projectLinks.hidden = true;
   }
 
   document.title = "Nadine Macapagal's Portfolio";
-  history.replaceState(null, "", window.location.pathname + window.location.search);
   setScrollPosition(0, true);
   animateDecorative(0);
 }
 
-async function setInfoMode(next) {
+async function setInfoMode(next, { fromHistory = false } = {}) {
   if (next === isInfoMode || isAnimating) return;
 
   if (next && isProjectMode) {
-    closeProject();
+    closeProject({ fromHistory: true });
+  }
+
+  if (!fromHistory) {
+    if (next && window.location.hash !== "#information") {
+      history.pushState({ view: "info" }, "", "#information");
+      hasPushedOverlayState = true;
+    } else if (!next && window.location.hash === "#information") {
+      historyBackOrHome();
+      return;
+    }
   }
 
   isInfoMode = next;
@@ -518,14 +662,12 @@ async function setInfoMode(next) {
   }
 
   if (isInfoMode) {
-    history.replaceState(null, "", "#information");
     const current = decorativeAmount;
     setScrollPosition(0, true);
     decorativeAmount = current;
     applyTypography(decorativeAmount);
     await animateDecorative(1);
   } else {
-    history.replaceState(null, "", window.location.pathname + window.location.search);
     setScrollPosition(0, true);
     await animateDecorative(0);
   }
@@ -601,25 +743,26 @@ if (homeButton) {
 }
 
 function syncFromHash() {
-  const hash = window.location.hash;
+  const route = getRouteFromHash();
 
-  if (hash === "#information") {
-    if (isProjectMode) closeProject();
-    if (!isInfoMode) setInfoMode(true);
+  if (route.view === "info") {
+    if (isProjectMode) closeProject({ fromHistory: true });
+    if (!isInfoMode) setInfoMode(true, { fromHistory: true });
     return;
   }
 
-  const projectMatch = hash.match(/^#project\/(.+)$/);
-  if (projectMatch && PROJECTS[projectMatch[1]]) {
-    openProject(projectMatch[1]);
+  if (route.view === "project") {
+    if (currentProjectId === route.projectId && isProjectMode) return;
+    openProject(route.projectId, { fromHistory: true });
     return;
   }
 
-  if (isProjectMode) closeProject();
-  if (isInfoMode) setInfoMode(false);
+  hasPushedOverlayState = false;
+  if (isProjectMode) closeProject({ fromHistory: true });
+  if (isInfoMode) setInfoMode(false, { fromHistory: true });
 }
 
-window.addEventListener("hashchange", syncFromHash);
+window.addEventListener("popstate", syncFromHash);
 
 let ticking = false;
 
@@ -654,7 +797,10 @@ window.addEventListener("resize", () => {
   applyTypography(decorativeAmount);
 });
 
-if (window.location.hash === "#information" || window.location.hash.startsWith("#project/")) {
+const initialRoute = getRouteFromHash();
+history.replaceState(initialRoute, "", window.location.pathname + window.location.search + window.location.hash);
+
+if (initialRoute.view !== "home") {
   syncFromHash();
 } else {
   if (infoPanel) infoPanel.setAttribute("aria-hidden", "true");
@@ -665,23 +811,7 @@ if (window.location.hash === "#information" || window.location.hash.startsWith("
 document.querySelectorAll("video").forEach(configureAutoplayVideo);
 
 function waitForGridMedia(el) {
-  if (el.tagName === "IMG") {
-    if (el.complete && el.naturalWidth > 0) return Promise.resolve();
-    return new Promise((resolve) => {
-      el.addEventListener("load", resolve, { once: true });
-      el.addEventListener("error", resolve, { once: true });
-    });
-  }
-
-  if (el.tagName === "VIDEO") {
-    if (el.readyState >= 2) return Promise.resolve();
-    return new Promise((resolve) => {
-      el.addEventListener("loadeddata", resolve, { once: true });
-      el.addEventListener("error", resolve, { once: true });
-    });
-  }
-
-  return Promise.resolve();
+  return waitForMedia(el);
 }
 
 function revealHomepageWhenGridReady() {
