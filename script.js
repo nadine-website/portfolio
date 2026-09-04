@@ -110,9 +110,10 @@ const PROJECTS = {
 Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appointments.`,
     media: [
       { type: "image", src: "thumbnails/Castle_1.png", alt: "Castle" },
+      { type: "image", src: "thumbnails/Castle_8.png", alt: "Castle" },
+      { type: "image", src: "thumbnails/Castle_9.png", alt: "Castle" },
       { type: "image", src: "thumbnails/castle_2.png", alt: "Castle" },
-      { type: "video", src: "thumbnails/castle_3.mp4" },
-      { type: "image", src: "thumbnails/Castle_6.jpg" },
+      { type: "video", src: "thumbnails/castle_10.mp4" },
       { type: "image", src: "thumbnails/castle_4.png" },
       { type: "image", src: "thumbnails/castle_7.png" },
 
