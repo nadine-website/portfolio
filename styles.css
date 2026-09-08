@@ -236,8 +236,9 @@ body.is-project .page-shell {
   z-index: 1;
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   padding-block: clamp(1rem, 3vh, 2.25rem) clamp(2rem, 5vh, 3.5rem);
   min-height: 0;
 }
@@ -269,6 +270,20 @@ body.is-project .project-grid {
   transform: translateX(-50%);
   width: 100%;
   max-width: var(--grid-max-width);
+}
+
+.home-quote {
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin: clamp(2.5rem, 6vh, 4rem) auto 0;
+  text-align: center;
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+body.is-info .home-quote,
+body.is-project .home-quote {
+  display: none;
 }
 
 .project-grid.is-single {
