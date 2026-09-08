@@ -711,9 +711,22 @@ function populateCardExcerpts() {
 
 populateCardExcerpts();
 
+const mobileViewQuery = window.matchMedia("(max-width: 800px)");
+
+function syncViewModeToViewport() {
+  if (!grid || !gridBtn || !singleBtn) return;
+  setViewMode(mobileViewQuery.matches);
+}
+
 if (gridBtn && singleBtn && grid) {
   gridBtn.addEventListener("click", () => setViewMode(false));
   singleBtn.addEventListener("click", () => setViewMode(true));
+  syncViewModeToViewport();
+  if (typeof mobileViewQuery.addEventListener === "function") {
+    mobileViewQuery.addEventListener("change", syncViewModeToViewport);
+  } else if (typeof mobileViewQuery.addListener === "function") {
+    mobileViewQuery.addListener(syncViewModeToViewport);
+  }
 }
 
 document.querySelectorAll(".project-card[data-project]").forEach((card) => {
