@@ -22,10 +22,12 @@ const PROJECTS = {
     media: [
       { type: "image", src: "thumbnails/Objects_General_1.jpg", alt: "Objects for General Use" },
       { type: "video", src: "thumbnails/objects_4.mov" },
-      { type: "image", src: "thumbnails/Objects_2.jpg", alt: "Objects for General Use" },
-      { type: "image", src: "thumbnails/objects_5.jpg", alt: "Objects for General Use" },
-      { type: "image", src: "thumbnails/Objects_6.jpg", alt: "Objects for General Use" },
+      { type: "image", src: "thumbnails/objects_7.png", alt: "Objects for General Use" },
       { type: "image", src: "thumbnails/Objects_3.jpg", alt: "Objects for General Use" },
+      { type: "image", src: "thumbnails/Objects_6.jpg", alt: "Objects for General Use" },
+      { type: "image", src: "thumbnails/objects_5.jpg", alt: "Objects for General Use" },
+      { type: "image", src: "thumbnails/Objects_2.jpg", alt: "Objects for General Use" },
+
 
     ],
   },
