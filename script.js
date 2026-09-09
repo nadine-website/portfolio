@@ -134,11 +134,12 @@ Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appoi
       },
     ],
     media: [
-      { type: "video", src: "thumbnails/YB_1.mp4", alt: "RISD Yearbook 2026" },
+      { type: "video", src: "thumbnails/YB_2.mp4", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_2.png", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_5.jpg", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_6.jpg", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_1.jpg", alt: "RISD Yearbook 2026" },
+      { type: "image", src: "thumbnails/YB_10.png", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_3.jpg", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_4.jpg", alt: "RISD Yearbook 2026" },
     ],
