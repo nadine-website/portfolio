@@ -72,6 +72,10 @@ body.is-project {
   height: 100vh;
 }
 
+body.is-lightbox {
+  overflow: hidden;
+}
+
 html.is-info,
 html.is-project {
   overflow: hidden;
@@ -415,6 +419,7 @@ body.is-project .main {
   flex: 0 0 auto;
   height: 100%;
   display: block;
+  cursor: zoom-in;
 }
 
 .project-gallery__item img,
@@ -426,6 +431,67 @@ body.is-project .main {
   object-fit: contain;
   background: #f3f3f3;
   pointer-events: none;
+}
+
+.media-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background: rgba(255, 255, 255, 0.94);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity var(--fade-duration) var(--motion-ease),
+    visibility var(--fade-duration) var(--motion-ease);
+}
+
+.media-lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.media-lightbox__close {
+  position: absolute;
+  top: clamp(0.75rem, 2vw, 1.5rem);
+  right: clamp(0.75rem, 2vw, 1.5rem);
+  z-index: 1;
+  background: none;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  font: inherit;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: #000;
+  cursor: pointer;
+}
+
+.media-lightbox__close:hover {
+  color: #0000ee;
+}
+
+.media-lightbox__stage {
+  max-width: min(96vw, 80rem);
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.media-lightbox__stage img,
+.media-lightbox__stage video {
+  display: block;
+  max-width: 100%;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background: transparent;
 }
 
 .project-meta {
