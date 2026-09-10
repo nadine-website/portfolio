@@ -98,7 +98,7 @@ const PROJECTS = {
     media: [
       { type: "image", src: "thumbnails/TMI_5.jpg", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_6.jpg", alt: "TMI" },
-      { type: "image", src: "thumbnails/TMI_10.png", alt: "TMI" },
+      { type: "image", src: "thumbnails/TMI_11.png", alt: "TMI" },
       { type: "video", src: "thumbnails/TMI_9.mp4", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_11.jpg", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_7.jpg", alt: "TMI" },
