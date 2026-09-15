@@ -140,9 +140,11 @@ Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appoi
       { type: "video", src: "thumbnails/YB_2.mp4", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_2.png", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_5.jpg", alt: "RISD Yearbook 2026" },
-      { type: "image", src: "thumbnails/YB_6.jpg", alt: "RISD Yearbook 2026" },
-      { type: "image", src: "thumbnails/YB_1.jpg", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_10.png", alt: "RISD Yearbook 2026" },
+
+      { type: "image", src: "thumbnails/YB_6.jpg", alt: "RISD Yearbook 2026" },
+
+      { type: "image", src: "thumbnails/YB_1.jpg", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_3.jpg", alt: "RISD Yearbook 2026" },
       { type: "image", src: "thumbnails/YB_4.jpg", alt: "RISD Yearbook 2026" },
     ],
@@ -751,6 +753,7 @@ function setViewMode(isSingle) {
   singleBtn.classList.toggle("is-active", isSingle);
   gridBtn.setAttribute("aria-pressed", String(!isSingle));
   singleBtn.setAttribute("aria-pressed", String(isSingle));
+  syncCardSlideshows(isSingle);
 }
 
 function firstSentence(text) {
@@ -778,8 +781,157 @@ function populateCardExcerpts() {
   });
 }
 
-populateCardExcerpts();
+function getSlideshowMedia(card, project) {
+  const media = (project.media || []).map((item) => ({
+    type: item.type,
+    src: item.src,
+    alt: item.alt || project.title,
+  }));
 
+  const coverEl = card.querySelector(".card-image img, .card-image video");
+  if (!coverEl) return media;
+
+  const coverSrc = coverEl.getAttribute("src");
+  const existingIndex = media.findIndex((item) => item.src === coverSrc);
+  if (existingIndex > 0) {
+    media.unshift(media.splice(existingIndex, 1)[0]);
+  } else if (existingIndex < 0) {
+    media.unshift({
+      type: coverEl.tagName === "VIDEO" ? "video" : "image",
+      src: coverSrc,
+      alt: coverEl.alt || project.title,
+    });
+  }
+
+  return media;
+}
+
+function renderCardSlide(card, { animate = false } = {}) {
+  const image = card.querySelector(".card-image");
+  const media = card._slideshowMedia;
+  const index = card._slideshowIndex || 0;
+  if (!image || !media || !media.length) return;
+
+  const applySlide = () => {
+    const item = media[index];
+    image.innerHTML = "";
+
+    if (item.type === "video") {
+      const video = document.createElement("video");
+      video.src = item.src;
+      video.preload = "metadata";
+      configureAutoplayVideo(video);
+      image.appendChild(video);
+    } else {
+      const img = document.createElement("img");
+      img.src = item.src;
+      img.alt = item.alt || "";
+      image.appendChild(img);
+    }
+
+    const prev = card.querySelector(".card-slideshow__prev");
+    const next = card.querySelector(".card-slideshow__next");
+    const canSlide = media.length > 1;
+    if (prev) prev.hidden = !canSlide;
+    if (next) next.hidden = !canSlide;
+  };
+
+  if (!animate || !motionEnabled) {
+    applySlide();
+    image.classList.remove("is-fading");
+    return;
+  }
+
+  if (card._slideshowAnimating) return;
+  card._slideshowAnimating = true;
+  image.classList.add("is-fading");
+
+  window.setTimeout(() => {
+    applySlide();
+    requestAnimationFrame(() => {
+      image.classList.remove("is-fading");
+      card._slideshowAnimating = false;
+    });
+  }, 180);
+}
+
+function stepCardSlide(card, direction) {
+  const media = card._slideshowMedia;
+  if (!media || media.length < 2 || card._slideshowAnimating) return;
+  const len = media.length;
+  card._slideshowIndex = (card._slideshowIndex + direction + len) % len;
+  renderCardSlide(card, { animate: true });
+}
+
+function initCardSlideshows() {
+  document.querySelectorAll(".project-card[data-project]").forEach((card) => {
+    const projectId = card.dataset.project;
+    const project = PROJECTS[projectId];
+    const hit = card.querySelector(".project-card__hit");
+    const image = card.querySelector(".card-image");
+    if (!project || !hit || !image || card.querySelector(".card-slideshow")) return;
+    if (card.classList.contains("project-card--disabled") || project.live === false) return;
+
+    const media = getSlideshowMedia(card, project);
+    if (!media.length) return;
+
+    card._slideshowMedia = media;
+    card._slideshowIndex = 0;
+
+    const slideshow = document.createElement("div");
+    slideshow.className = "card-slideshow";
+
+    hit.parentNode.insertBefore(slideshow, hit);
+    slideshow.appendChild(image);
+
+    const prev = document.createElement("button");
+    prev.type = "button";
+    prev.className = "card-slideshow__prev";
+    prev.setAttribute("aria-label", "Previous image");
+
+    const next = document.createElement("button");
+    next.type = "button";
+    next.className = "card-slideshow__next";
+    next.setAttribute("aria-label", "Next image");
+
+    prev.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      stepCardSlide(card, -1);
+    });
+
+    next.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      stepCardSlide(card, 1);
+    });
+
+    slideshow.appendChild(prev);
+    slideshow.appendChild(next);
+
+    if (!card.classList.contains("project-card--disabled") && !hit.disabled) {
+      slideshow.addEventListener("click", (event) => {
+        if (event.target.closest(".card-slideshow__prev, .card-slideshow__next")) return;
+        openProject(projectId);
+      });
+    }
+
+    renderCardSlide(card);
+  });
+}
+
+function syncCardSlideshows(isSingle) {
+  document.querySelectorAll(".project-card[data-project]").forEach((card) => {
+    if (!card._slideshowMedia) return;
+    if (!isSingle) {
+      card._slideshowIndex = 0;
+      renderCardSlide(card);
+    }
+  });
+}
+
+populateCardExcerpts();
+initCardSlideshows();
 const mobileViewQuery = window.matchMedia("(max-width: 800px)");
 
 function syncViewModeToViewport() {
