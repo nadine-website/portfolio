@@ -70,7 +70,7 @@ const PROJECTS = {
       { type: "image", src: "thumbnails/LG_11.webp", alt: "LG Reactions" },
       { type: "video", src: "thumbnails/LG_12.mp4", alt: "LG Reactions" },
       { type: "image", src: "thumbnails/LG_16.webp", alt: "LG Reactions" },
-      { type: "video", src: "thumbnails/LG_19.mp4" },
+      { type: "video", src: "thumbnails/lg_19.mp4" },
       { type: "image", src: "thumbnails/LG_Reactions.jpg", alt: "LG Reactions" },
       { type: "image", src: "thumbnails/LG_3.png", alt: "LG Reactions" },
       { type: "video", src: "thumbnails/LG_10.mp4", alt: "LG Reactions" },
@@ -78,7 +78,7 @@ const PROJECTS = {
       { type: "video", src: "thumbnails/LG_5.mp4" },
       { type: "video", src: "thumbnails/LG_8.mp4" },
       { type: "image", src: "thumbnails/LG_7.webp", alt: "LG Reactions" },
-      { type: "image", src: "thumbnails/LG_18.png", alt: "LG Reactions" },
+      { type: "image", src: "thumbnails/lg_18.png", alt: "LG Reactions" },
       { type: "image", src: "thumbnails/LG_15.jpeg", alt: "LG Reactions" },
 
 
@@ -141,13 +141,13 @@ const PROJECTS = {
       { type: "image", src: "thumbnails/TMI_11.png", alt: "TMI" },
       { type: "video", src: "thumbnails/TMI_9.mp4", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_11.jpg", alt: "TMI" },
-      { type: "image", src: "thumbnails/TMI_7.png", alt: "TMI" },
+      { type: "image", src: "thumbnails/tmi_7.png", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_4.png", alt: "TMI" },
-      { type: "video", src: "thumbnails/TMI_16.mp4", alt: "TMI" },
-      { type: "image", src: "thumbnails/TMI_13.jpg", alt: "TMI" },
+      { type: "video", src: "thumbnails/tmi_16.mp4", alt: "TMI" },
+      { type: "image", src: "thumbnails/tmi_13.jpg", alt: "TMI" },
 
       { type: "image", src: "thumbnails/TMI_8.png", alt: "TMI" },
-      { type: "image", src: "thumbnails/TMI_12.jpg", alt: "TMI" },
+      { type: "image", src: "thumbnails/tmi_12.jpg", alt: "TMI" },
 
 
     ],
