@@ -205,7 +205,7 @@ Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appoi
       { type: "image", src: "thumbnails/sfmoma_2.png", alt: "SFMOMA" },
       { type: "image", src: "thumbnails/sfmoma_1.jpg", alt: "SFMOMA" },
       { type: "image", src: "thumbnails/sfmoma_4.jpg", alt: "SFMOMA" },
-      { type: "image", src: "thumbnails/sfmoma_7.jpg", alt: "SFMOMA" },
+      { type: "image", src: "thumbnails/SFMOMA_7.jpg", alt: "SFMOMA" },
       { type: "image", src: "thumbnails/sfmoma_9.jpg", alt: "SFMOMA" },
       { type: "image", src: "thumbnails/sfmoma_9.png", alt: "SFMOMA" },
 
@@ -678,14 +678,15 @@ function renderProjectMedia(project, projectId) {
   projectGallery.innerHTML = "";
 
   const mediaElements = [];
+  const items = getProjectMediaList(project);
 
-  getProjectMediaList(project).forEach((item) => {
+  items.forEach((item, index) => {
     const wrap = document.createElement("div");
     wrap.className = "project-gallery__item";
 
     if (item.type === "video") {
       const video = document.createElement("video");
-      video.preload = "auto";
+      video.preload = index === 0 ? "auto" : "metadata";
       configureAutoplayVideo(video);
       video.src = item.src;
       wrap.appendChild(video);
@@ -695,6 +696,7 @@ function renderProjectMedia(project, projectId) {
       const img = document.createElement("img");
       img.src = item.src;
       img.alt = item.alt || project.title;
+      if (index > 0) img.loading = "lazy";
       wrap.appendChild(img);
       bindGalleryZoom(wrap, img);
       mediaElements.push(img);
@@ -705,15 +707,20 @@ function renderProjectMedia(project, projectId) {
 
   projectGallery.scrollLeft = 0;
 
-  const timeout = new Promise((resolve) => setTimeout(resolve, 10000));
-
-  Promise.race([Promise.all(mediaElements.map(waitForMedia)), timeout]).then(() => {
+  const first = mediaElements[0];
+  const reveal = () => {
     if (currentProjectId !== loadId || !isProjectMode) return;
     projectGallery.classList.remove("is-loading");
     mediaElements.forEach((el) => {
       if (el.tagName === "VIDEO") configureAutoplayVideo(el);
     });
-  });
+  };
+
+  // Don't wait for every large file — show once the first item is ready
+  Promise.race([
+    first ? waitForMedia(first) : Promise.resolve(),
+    new Promise((resolve) => setTimeout(resolve, 1500)),
+  ]).then(reveal);
 }
 
 function openProject(projectId, { fromHistory = false } = {}) {
