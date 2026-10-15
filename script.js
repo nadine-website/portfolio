@@ -22,6 +22,13 @@ const PROJECTS = {
     categories: "Product, Editorial, Exhibition",
     description:
       "A collection of standardized objects presented as tools for general use. The project examines how systems of measurement, instruction, and handling shape our relationship to everyday objects.",
+    note: [
+      { text: "This collection is a part of a larger body of work, my thesis " },
+      { text: "In Plain Sight", italic: true },
+      { text: ", which can be viewed " },
+      { text: "here", projectId: "plain-sight" },
+      { text: "." },
+    ],
     media: [
       { type: "image", src: "thumbnails/Objects_General_1.jpg", alt: "Objects for General Use" },
       { type: "video", src: "thumbnails/objects_4.mov" },
@@ -60,15 +67,20 @@ const PROJECTS = {
     description:
       "During my internship at Yung Studio, I worked across UI/UX, motion, stage design, and front-end development for Lady Gaga’s MAYHEM BALL. I helped shape the hand-drawn identity, interactive stage experience, and LADYGAGA.com takeovers, translating the world of MAYHEM into digital experiences tied to lyrics and merch.",
     media: [
-      { type: "image", src: "thumbnails/LG_Reactions.jpg", alt: "LG Reactions" },
-      { type: "video", src: "thumbnails/LG_5.mp4" },
-      { type: "video", src: "thumbnails/LG_12.mp4", alt: "LG Reactions" },
       { type: "image", src: "thumbnails/LG_11.webp", alt: "LG Reactions" },
+      { type: "video", src: "thumbnails/LG_12.mp4", alt: "LG Reactions" },
+      { type: "image", src: "thumbnails/LG_16.webp", alt: "LG Reactions" },
+      { type: "video", src: "thumbnails/LG_19.mp4" },
+      { type: "image", src: "thumbnails/LG_Reactions.jpg", alt: "LG Reactions" },
       { type: "image", src: "thumbnails/LG_3.png", alt: "LG Reactions" },
       { type: "video", src: "thumbnails/LG_10.mp4", alt: "LG Reactions" },
-      { type: "image", src: "thumbnails/LG_7.webp", alt: "LG Reactions" },
+      { type: "image", src: "thumbnails/LG_15.png", alt: "LG Reactions" },
+      { type: "video", src: "thumbnails/LG_5.mp4" },
       { type: "video", src: "thumbnails/LG_8.mp4" },
-      { type: "image", src: "thumbnails/LG_6.png", alt: "LG Reactions" },
+      { type: "image", src: "thumbnails/LG_7.webp", alt: "LG Reactions" },
+      { type: "image", src: "thumbnails/LG_18.png", alt: "LG Reactions" },
+      { type: "image", src: "thumbnails/LG_15.jpeg", alt: "LG Reactions" },
+
 
     ],
   },
@@ -76,12 +88,40 @@ const PROJECTS = {
     title: "In Plain Sight ⌕",
     categories: "Identity, Editorial, Motion, Product",
     description:
-      "Visual investigations into what hides in ordinary view.",
-    media: [{ type: "video", src: "thumbnails/PlainSight_1.mp4" }],
+      "My thesis explores the visual systems we inherit and rarely question, from alphabets and interfaces to everyday tools of measurement. Through experiments across physical and digital forms, I investigate how familiar structures shape our understanding of the world, and what becomes possible when their underlying logic is reconsidered.",
+    note: [
+      { text: "Selected objects in this collection also appear in my other project, " },
+      { text: "Objects of General Use", italic: true },
+      { text: ", which can be viewed " },
+      { text: "here", projectId: "objects-general" },
+      { text: "." },
+    ],
+    media: [
+      { type: "image", src: "thumbnails/ips_4.png", alt: "ips" },
+      { type: "image", src: "thumbnails/ips_05.png", alt: "ips" },
+      { type: "image", src: "thumbnails/ips_1.png", alt: "ips" },
+      { type: "image", src: "thumbnails/ips_7.png", alt: "ips" },
+      { type: "video", src: "thumbnails/ips_8.mp4", alt: "ips" },
+      { type: "image", src: "thumbnails/ips_9.jpg", alt: "ips" },
+      { type: "image", src: "thumbnails/ips_2.jpg", alt: "ips" },
+      { type: "image", src: "thumbnails/ips_10.jpg", alt: "ips" },
+      { type: "image", src: "thumbnails/ips_11.png", alt: "ips" },
+      { type: "image", src: "thumbnails/ips_13.jpg", alt: "ips" },
+      { type: "video", src: "thumbnails/1_Spiral_Browser copy.mp4", alt: "ips" },
+      { type: "image", src: "thumbnails/ips_12.png", alt: "ips" },
+      { type: "image", src: "thumbnails/ips_14.jpg", alt: "ips" },
+
+
+
+
+
+
+
+    ],
   },
   tmi: {
     title: "Too Much Information ⏱︎",
-    categories: "Identity, Publication, Motion",
+    categories: "Identity, Publication, Motion, Web",
     description: `Too Much Information (TMI) is an intergenerational event series centered on shared learning. Daniel Lucas and I have designed its visual identity since the beginning, most recently extending it across the program, print materials, merchandise, and website for its third iteration on ritual and the magic of trusting simple things.`,
     links: [
       {
@@ -101,10 +141,15 @@ const PROJECTS = {
       { type: "image", src: "thumbnails/TMI_11.png", alt: "TMI" },
       { type: "video", src: "thumbnails/TMI_9.mp4", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_11.jpg", alt: "TMI" },
-      { type: "image", src: "thumbnails/TMI_7.jpg", alt: "TMI" },
+      { type: "image", src: "thumbnails/TMI_7.png", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_4.png", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_3.png", alt: "TMI" },
+      { type: "image", src: "thumbnails/TMI_13.jpg", alt: "TMI" },
+
       { type: "image", src: "thumbnails/TMI_8.png", alt: "TMI" },
+      { type: "image", src: "thumbnails/TMI_12.jpg", alt: "TMI" },
+
+
     ],
   },
   castle: {
@@ -152,18 +197,24 @@ Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appoi
   sfmoma: {
     title: "SFMOMA 𖡎",
     categories: "Identity, Editorial, Exhibition",
-    description: "Work for the San Francisco Museum of Modern Art.",
-    live: false,
+    description: "During my time at SFMOMA’s Design Studio, I worked on a range of projects across the museum, from exhibition signage and large-scale wall graphics to printed and digital materials. I was involved in both design and production, working with existing visual identities and adapting them to different spaces and formats, from initial layouts through final production files.",
+    live: true,
     media: [
+      { type: "image", src: "thumbnails/sfmoma_14.png", alt: "SFMOMA" },
       { type: "image", src: "thumbnails/sfmoma_5.jpg", alt: "SFMOMA" },
-      { type: "image", src: "thumbnails/sfmoma_2.jpg", alt: "SFMOMA" },
-
+      { type: "image", src: "thumbnails/sfmoma_2.png", alt: "SFMOMA" },
       { type: "image", src: "thumbnails/sfmoma_1.jpg", alt: "SFMOMA" },
-      { type: "image", src: "thumbnails/sfmoma_8.png", alt: "SFMOMA" },
-
       { type: "image", src: "thumbnails/sfmoma_4.jpg", alt: "SFMOMA" },
       { type: "image", src: "thumbnails/sfmoma_7.jpg", alt: "SFMOMA" },
+      { type: "image", src: "thumbnails/sfmoma_9.jpg", alt: "SFMOMA" },
       { type: "image", src: "thumbnails/sfmoma_9.png", alt: "SFMOMA" },
+
+      { type: "video", src: "thumbnails/Archive/SFMOMA_AD.mp4", alt: "SFMOMA" },
+      { type: "image", src: "thumbnails/sfmoma_11.jpg", alt: "SFMOMA" },
+
+      { type: "image", src: "thumbnails/sfmoma_12.png", alt: "SFMOMA" },
+
+
     ],
   },
 };
@@ -469,6 +520,37 @@ function observeAutoplayVideo(video) {
   videoObserver.observe(video);
 }
 
+function appendProjectNoteSegments(container, segments) {
+  segments.forEach((segment) => {
+    let node;
+    if (segment.projectId) {
+      node = document.createElement("a");
+      node.href = `#project/${segment.projectId}`;
+      node.textContent = segment.text;
+      node.addEventListener("click", (event) => {
+        event.preventDefault();
+        openProject(segment.projectId);
+      });
+    } else {
+      node = document.createTextNode(segment.text);
+    }
+
+    if (segment.italic) {
+      const em = document.createElement("em");
+      if (segment.projectId) {
+        em.appendChild(node);
+        container.appendChild(em);
+      } else {
+        em.textContent = segment.text;
+        container.appendChild(em);
+      }
+      return;
+    }
+
+    container.appendChild(node);
+  });
+}
+
 function renderProjectLinks(project) {
   if (!projectLinks) return;
 
@@ -476,8 +558,9 @@ function renderProjectLinks(project) {
 
   const hasCredit = Boolean(project.credit);
   const hasLinks = Boolean(project.links && project.links.length);
+  const hasNote = Boolean(project.note && project.note.length);
 
-  if (!hasCredit && !hasLinks) {
+  if (!hasCredit && !hasLinks && !hasNote) {
     projectLinks.hidden = true;
     return;
   }
@@ -498,6 +581,11 @@ function renderProjectLinks(project) {
       anchor.rel = "noopener noreferrer";
       projectLinks.appendChild(anchor);
     });
+  }
+
+  if (hasNote) {
+    if (hasCredit || hasLinks) projectLinks.appendChild(document.createElement("br"));
+    appendProjectNoteSegments(projectLinks, project.note);
   }
 
   projectLinks.hidden = false;
@@ -591,7 +679,7 @@ function renderProjectMedia(project, projectId) {
 
   const mediaElements = [];
 
-  project.media.forEach((item) => {
+  getProjectMediaList(project).forEach((item) => {
     const wrap = document.createElement("div");
     wrap.className = "project-gallery__item";
 
@@ -781,8 +869,15 @@ function populateCardExcerpts() {
   });
 }
 
+function getProjectMediaList(project) {
+  const media = project && project.media;
+  if (Array.isArray(media)) return media.filter((item) => item && item.src);
+  if (media && typeof media === "object" && media.src) return [media];
+  return [];
+}
+
 function getSlideshowMedia(card, project) {
-  const media = (project.media || []).map((item) => ({
+  const media = getProjectMediaList(project).map((item) => ({
     type: item.type,
     src: item.src,
     alt: item.alt || project.title,
@@ -930,8 +1025,12 @@ function syncCardSlideshows(isSingle) {
   });
 }
 
-populateCardExcerpts();
-initCardSlideshows();
+try {
+  populateCardExcerpts();
+  initCardSlideshows();
+} catch (error) {
+  console.error(error);
+}
 const mobileViewQuery = window.matchMedia("(max-width: 800px)");
 
 function syncViewModeToViewport() {
@@ -1060,6 +1159,11 @@ if (initialRoute.view !== "home") {
 }
 
 document.querySelectorAll("video").forEach(configureAutoplayVideo);
+
+document.querySelectorAll(".archive-grid__item").forEach((item) => {
+  const media = item.querySelector("img, video");
+  if (media) bindGalleryZoom(item, media);
+});
 
 function waitForGridMedia(el) {
   return waitForMedia(el);
