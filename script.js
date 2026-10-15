@@ -100,16 +100,16 @@ const PROJECTS = {
       { type: "image", src: "thumbnails/ips_4.png", alt: "ips" },
       { type: "image", src: "thumbnails/ips_05.png", alt: "ips" },
       { type: "image", src: "thumbnails/ips_1.png", alt: "ips" },
-      { type: "image", src: "thumbnails/ips_7.png", alt: "ips" },
+      { type: "image", src: "thumbnails/IPS_7.png", alt: "ips" },
       { type: "video", src: "thumbnails/ips_8.mp4", alt: "ips" },
       { type: "image", src: "thumbnails/ips_9.jpg", alt: "ips" },
-      { type: "image", src: "thumbnails/ips_2.jpg", alt: "ips" },
+      { type: "image", src: "thumbnails/IPS_2.jpg", alt: "ips" },
       { type: "image", src: "thumbnails/ips_10.jpg", alt: "ips" },
       { type: "image", src: "thumbnails/ips_11.png", alt: "ips" },
       { type: "image", src: "thumbnails/ips_13.jpg", alt: "ips" },
-      { type: "video", src: "thumbnails/1_Spiral_Browser copy.mp4", alt: "ips" },
-      { type: "image", src: "thumbnails/ips_12.png", alt: "ips" },
-      { type: "image", src: "thumbnails/ips_14.jpg", alt: "ips" },
+      { type: "video", src: "thumbnails/1_Spiral_Browser_copy.mp4", alt: "ips" },
+      { type: "image", src: "thumbnails/IPS_12.png", alt: "ips" },
+      { type: "image", src: "thumbnails/IPS_14.jpg", alt: "ips" },
 
 
 
