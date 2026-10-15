@@ -143,7 +143,7 @@ const PROJECTS = {
       { type: "image", src: "thumbnails/TMI_11.jpg", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_7.png", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_4.png", alt: "TMI" },
-      { type: "image", src: "thumbnails/TMI_3.png", alt: "TMI" },
+      { type: "video", src: "thumbnails/TMI_16.mp4", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_13.jpg", alt: "TMI" },
 
       { type: "image", src: "thumbnails/TMI_8.png", alt: "TMI" },
