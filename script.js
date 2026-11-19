@@ -121,7 +121,7 @@ const PROJECTS = {
   },
   tmi: {
     title: "Too Much Information ⏱︎",
-    categories: "Identity, Publication, Motion, Web",
+    categories: "Identity, Publication, Motion, Web, Merch",
     description: `Too Much Information (TMI) is an intergenerational event series centered on shared learning. Daniel Lucas and I have designed its visual identity since the beginning, most recently extending it across the program, print materials, merchandise, and website for its third iteration on ritual and the magic of trusting simple things.`,
     links: [
       {
@@ -140,9 +140,9 @@ const PROJECTS = {
       { type: "image", src: "thumbnails/TMI_6.jpg", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_11.png", alt: "TMI" },
       { type: "video", src: "thumbnails/TMI_9.mp4", alt: "TMI" },
-      { type: "image", src: "thumbnails/TMI_11.jpg", alt: "TMI" },
-      { type: "image", src: "thumbnails/tmi_7.png", alt: "TMI" },
+      { type: "image", src: "thumbnails/tmi_17.png", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_4.png", alt: "TMI" },
+      { type: "image", src: "thumbnails/tmi_7.png", alt: "TMI" },
       { type: "video", src: "thumbnails/tmi_16.mp4", alt: "TMI" },
       { type: "image", src: "thumbnails/tmi_13.jpg", alt: "TMI" },
 
@@ -164,8 +164,9 @@ Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appoi
       { type: "image", src: "thumbnails/castle_9.jpg", alt: "Castle" },
       { type: "image", src: "thumbnails/castle_2.png", alt: "Castle" },
       { type: "video", src: "thumbnails/castle_10.mp4" },
+      { type: "image", src: "thumbnails/castle_12.jpg" },
+
       { type: "image", src: "thumbnails/castle_4.png" },
-      { type: "image", src: "thumbnails/castle_7.png" },
 
 
     ],
