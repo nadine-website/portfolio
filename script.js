@@ -1,6 +1,9 @@
 const gridBtn = document.querySelector(".view-toggle__grid");
 const singleBtn = document.querySelector(".view-toggle__single");
+const editorialFilterBtn = document.querySelector(".category-filter__editorial");
+const identityFilterBtn = document.querySelector(".category-filter__identity");
 const grid = document.querySelector(".project-grid");
+let activeCategoryFilter = null;
 const infoPanel = document.querySelector(".info-panel");
 const projectPanel = document.querySelector(".project-panel");
 const projectGallery = document.querySelector(".project-gallery");
@@ -925,6 +928,7 @@ function setViewMode(isSingle) {
   gridBtn.setAttribute("aria-pressed", String(!isSingle));
   singleBtn.setAttribute("aria-pressed", String(isSingle));
   syncCardSlideshows(isSingle);
+  updateFilterLayout();
 }
 
 function firstSentence(text) {
@@ -1133,6 +1137,60 @@ if (gridBtn && singleBtn && grid) {
   } else if (typeof mobileViewQuery.addListener === "function") {
     mobileViewQuery.addListener(syncViewModeToViewport);
   }
+}
+
+function getCardCategories(card) {
+  // Use the tags shown on the homepage card
+  const fromCard = card.querySelector(".card-subtitle")?.textContent || "";
+  return fromCard
+    .split(",")
+    .map((tag) => tag.trim().toLowerCase())
+    .filter(Boolean);
+}
+
+function updateFilterLayout() {
+  if (!grid) return;
+  const cards = [...grid.querySelectorAll(".project-card[data-project]")];
+  cards.forEach((card) => card.classList.remove("is-filter-last"));
+
+  const visible = cards.filter((card) => !card.classList.contains("is-filtered-out"));
+  if (!grid.classList.contains("is-single") && visible.length % 2 === 1) {
+    visible[visible.length - 1].classList.add("is-filter-last");
+  }
+}
+
+function setCategoryFilter(filter) {
+  activeCategoryFilter = activeCategoryFilter === filter ? null : filter;
+
+  if (editorialFilterBtn) {
+    const on = activeCategoryFilter === "editorial";
+    editorialFilterBtn.classList.toggle("is-active", on);
+    editorialFilterBtn.setAttribute("aria-pressed", String(on));
+  }
+  if (identityFilterBtn) {
+    const on = activeCategoryFilter === "identity";
+    identityFilterBtn.classList.toggle("is-active", on);
+    identityFilterBtn.setAttribute("aria-pressed", String(on));
+  }
+
+  document.querySelectorAll(".project-card[data-project]").forEach((card) => {
+    if (!activeCategoryFilter) {
+      card.classList.remove("is-filtered-out");
+      return;
+    }
+    const match = getCardCategories(card).some(
+      (tag) => tag === activeCategoryFilter || tag.startsWith(`${activeCategoryFilter} `)
+    );
+    card.classList.toggle("is-filtered-out", !match);
+  });
+
+  updateFilterLayout();
+}
+
+if (editorialFilterBtn && identityFilterBtn) {
+  editorialFilterBtn.addEventListener("click", () => setCategoryFilter("editorial"));
+  identityFilterBtn.addEventListener("click", () => setCategoryFilter("identity"));
+  updateFilterLayout();
 }
 
 document.querySelectorAll(".project-card[data-project]").forEach((card) => {
