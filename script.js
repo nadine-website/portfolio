@@ -705,13 +705,13 @@ function renderProjectMedia(project, projectId) {
   const mediaElements = [];
   const items = getProjectMediaList(project);
 
-  items.forEach((item, index) => {
+  items.forEach((item) => {
     const wrap = document.createElement("div");
     wrap.className = "project-gallery__item";
 
     if (item.type === "video") {
       const video = document.createElement("video");
-      video.preload = index === 0 ? "auto" : "metadata";
+      video.preload = "auto";
       configureAutoplayVideo(video);
       video.src = item.src;
       wrap.appendChild(video);
@@ -721,7 +721,7 @@ function renderProjectMedia(project, projectId) {
       const img = document.createElement("img");
       img.src = item.src;
       img.alt = item.alt || project.title;
-      if (index > 0) img.loading = "lazy";
+      img.loading = "eager";
       wrap.appendChild(img);
       bindGalleryZoom(wrap, img);
       mediaElements.push(img);
@@ -732,7 +732,6 @@ function renderProjectMedia(project, projectId) {
 
   projectGallery.scrollLeft = 0;
 
-  const first = mediaElements[0];
   const reveal = () => {
     if (currentProjectId !== loadId || !isProjectMode) return;
     projectGallery.classList.remove("is-loading");
@@ -741,10 +740,9 @@ function renderProjectMedia(project, projectId) {
     });
   };
 
-  // Don't wait for every large file — show once the first item is ready
   Promise.race([
-    first ? waitForMedia(first) : Promise.resolve(),
-    new Promise((resolve) => setTimeout(resolve, 1500)),
+    Promise.all(mediaElements.map(waitForMedia)),
+    new Promise((resolve) => setTimeout(resolve, 20000)),
   ]).then(reveal);
 }
 
@@ -1197,32 +1195,35 @@ document.querySelectorAll(".archive-grid__item").forEach((item) => {
   if (media) bindGalleryZoom(item, media);
 });
 
-function waitForGridMedia(el) {
-  return waitForMedia(el);
+function dismissPageLoader() {
+  document.body.classList.remove("is-loading");
+  const loader = document.querySelector(".page-loader");
+  if (!loader) return;
+  loader.setAttribute("aria-busy", "false");
+  window.setTimeout(() => {
+    loader.hidden = true;
+  }, 700);
 }
 
-function revealHomepageWhenGridReady() {
-  const gridMedia = document.querySelectorAll(".project-grid .card-image img, .project-grid .card-image video");
-  if (!gridMedia.length) {
-    document.body.classList.remove("is-loading");
+function revealPageWhenMediaReady(selector, { timeoutMs = 20000 } = {}) {
+  const media = document.querySelectorAll(selector);
+  if (!media.length) {
+    dismissPageLoader();
     return;
   }
 
-  const loader = document.querySelector(".page-loader");
-  const timeout = new Promise((resolve) => setTimeout(resolve, 8000));
-
   Promise.race([
-    Promise.all([...gridMedia].map(waitForGridMedia)),
-    timeout,
-  ]).then(() => {
-    document.body.classList.remove("is-loading");
-    if (loader) {
-      loader.setAttribute("aria-busy", "false");
-      window.setTimeout(() => {
-        loader.hidden = true;
-      }, 700);
-    }
-  });
+    Promise.all([...media].map(waitForMedia)),
+    new Promise((resolve) => setTimeout(resolve, timeoutMs)),
+  ]).then(dismissPageLoader);
 }
 
-revealHomepageWhenGridReady();
+if (document.querySelector(".project-grid")) {
+  revealPageWhenMediaReady(
+    ".project-grid .card-image img, .project-grid .card-image video"
+  );
+} else if (document.querySelector(".archive-grid")) {
+  revealPageWhenMediaReady(".archive-grid img, .archive-grid video");
+} else {
+  dismissPageLoader();
+}
