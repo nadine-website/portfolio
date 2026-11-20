@@ -258,6 +258,12 @@ body.is-project .page-shell {
   transition: opacity var(--fade-duration) var(--motion-ease);
 }
 
+.project-grid:not(.is-single) > .project-card:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  width: calc((100% - var(--grid-gap)) / 2);
+  justify-self: center;
+}
+
 body.is-project .header {
   width: 100%;
   max-width: var(--page-max-width);

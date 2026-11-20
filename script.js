@@ -217,6 +217,32 @@ Visit 238 King Street, San Francisco, or text (415) 797-4006 for sales and appoi
 
     ],
   },
+  "volume-1": {
+    title: "Volume 1",
+    categories: "Editorial, Publication",
+    description:
+      "v.1 is a student-led publication at the Rhode Island School of Design that brings together ideas and perspectives from across the RISD community. As Creative Director and designer, I worked on shaping the magazine’s visual identity and bringing each issue to life through its design and production, along with its accompanying digital materials.",
+    links: [
+      {
+        before: "Visit ",
+        href: "https://volume-1.org/",
+        text: "volume-1.org",
+      },
+    ],
+    media: [
+      { type: "image", src: "thumbnails/v1_1-01.png", alt: "Volume 1" },
+      { type: "image", src: "thumbnails/v1_1-02.png", alt: "Volume 1" },
+      { type: "image", src: "thumbnails/v1_11.png", alt: "Volume 1" },
+      { type: "image", src: "thumbnails/v1_4.png", alt: "Volume 1" },
+      { type: "image", src: "thumbnails/v1_3.png", alt: "Volume 1" },
+      { type: "image", src: "thumbnails/v1_5.png", alt: "Volume 1" },
+      { type: "image", src: "thumbnails/v1_6.png", alt: "Volume 1" },
+      { type: "image", src: "thumbnails/v1_10.png", alt: "Volume 1" },
+      { type: "image", src: "thumbnails/v1_7.png", alt: "Volume 1" },
+      { type: "image", src: "thumbnails/v1_12.png", alt: "Volume 1" },
+      { type: "image", src: "thumbnails/v1_8.png", alt: "Volume 1" },
+    ],
+  },
 };
 
 const PORTFOLIO_STEP = { x: 0.44, y: 0.4 };
