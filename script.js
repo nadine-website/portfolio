@@ -140,12 +140,11 @@ const PROJECTS = {
       { type: "image", src: "thumbnails/TMI_6.jpg", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_11.png", alt: "TMI" },
       { type: "video", src: "thumbnails/TMI_9.mp4", alt: "TMI" },
-      { type: "image", src: "thumbnails/tmi_17.png", alt: "TMI" },
+      { type: "image", src: "thumbnails/TMI_17.png", alt: "TMI" },
       { type: "image", src: "thumbnails/TMI_4.png", alt: "TMI" },
       { type: "image", src: "thumbnails/tmi_7.png", alt: "TMI" },
       { type: "video", src: "thumbnails/tmi_16.mp4", alt: "TMI" },
       { type: "image", src: "thumbnails/tmi_13.jpg", alt: "TMI" },
-
       { type: "image", src: "thumbnails/TMI_8.png", alt: "TMI" },
       { type: "image", src: "thumbnails/tmi_12.jpg", alt: "TMI" },
 
