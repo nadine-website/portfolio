@@ -55,6 +55,7 @@ const PROJECTS = {
       { type: "image", src: "thumbnails/commencement_8.jpg" },
       { type: "image", src: "thumbnails/commencement_4.png", alt: "Commencement" },
       { type: "image", src: "thumbnails/Commencement_3.png", alt: "Commencement" },
+      { type: "image", src: "thumbnails/commencement_11.jpg" },
       { type: "image", src: "thumbnails/commencement_9.jpg" },
       { type: "video", src: "thumbnails/Commencement_5.mp4" },
 
@@ -647,6 +648,7 @@ function openMediaLightbox(sourceEl) {
   }
 
   mediaLightboxStage.appendChild(viewer);
+  enableMediaFade(viewer);
   mediaLightbox.hidden = false;
   mediaLightbox.setAttribute("aria-hidden", "false");
   document.body.classList.add("is-lightbox");
@@ -695,6 +697,53 @@ function waitForMedia(el) {
   return Promise.resolve();
 }
 
+function enableMediaFade(el) {
+  if (!el) return Promise.resolve();
+  if (el.dataset.mediaFade === "1") {
+    return el.classList.contains("is-loaded") ? Promise.resolve() : waitForMedia(el);
+  }
+  el.dataset.mediaFade = "1";
+  el.classList.add("media-fade");
+
+  const markLoaded = () => {
+    el.classList.add("is-loaded");
+  };
+
+  const finish = async () => {
+    try {
+      if (el.tagName === "IMG" && typeof el.decode === "function" && el.naturalWidth > 0) {
+        await el.decode();
+      }
+    } catch (_) {
+      /* decode can reject for broken/cached edge cases */
+    }
+    markLoaded();
+  };
+
+  if (el.tagName === "IMG") {
+    if (el.complete && el.naturalWidth > 0) return finish();
+    return new Promise((resolve) => {
+      const done = () => finish().finally(resolve);
+      el.addEventListener("load", done, { once: true });
+      el.addEventListener(
+        "error",
+        () => {
+          markLoaded();
+          resolve();
+        },
+        { once: true }
+      );
+    });
+  }
+
+  if (el.tagName === "VIDEO") {
+    return waitForMedia(el).then(markLoaded);
+  }
+
+  markLoaded();
+  return Promise.resolve();
+}
+
 function renderProjectMedia(project, projectId) {
   if (!projectGallery) return;
 
@@ -705,25 +754,28 @@ function renderProjectMedia(project, projectId) {
   const mediaElements = [];
   const items = getProjectMediaList(project);
 
-  items.forEach((item) => {
+  items.forEach((item, index) => {
     const wrap = document.createElement("div");
     wrap.className = "project-gallery__item";
 
     if (item.type === "video") {
       const video = document.createElement("video");
-      video.preload = "auto";
+      video.preload = index === 0 ? "auto" : "metadata";
       configureAutoplayVideo(video);
       video.src = item.src;
       wrap.appendChild(video);
       bindGalleryZoom(wrap, video);
+      enableMediaFade(video);
       mediaElements.push(video);
     } else {
       const img = document.createElement("img");
       img.src = item.src;
       img.alt = item.alt || project.title;
-      img.loading = "eager";
+      img.loading = index === 0 ? "eager" : "lazy";
+      if (index === 0) img.fetchPriority = "high";
       wrap.appendChild(img);
       bindGalleryZoom(wrap, img);
+      enableMediaFade(img);
       mediaElements.push(img);
     }
 
@@ -740,9 +792,10 @@ function renderProjectMedia(project, projectId) {
     });
   };
 
+  // Show gallery once the first item is ready; later items fade in as they lazy-load
   Promise.race([
-    Promise.all(mediaElements.map(waitForMedia)),
-    new Promise((resolve) => setTimeout(resolve, 20000)),
+    mediaElements[0] ? waitForMedia(mediaElements[0]) : Promise.resolve(),
+    new Promise((resolve) => setTimeout(resolve, 10000)),
   ]).then(reveal);
 }
 
@@ -947,11 +1000,14 @@ function renderCardSlide(card, { animate = false } = {}) {
       video.preload = "metadata";
       configureAutoplayVideo(video);
       image.appendChild(video);
+      enableMediaFade(video);
     } else {
       const img = document.createElement("img");
       img.src = item.src;
       img.alt = item.alt || "";
+      img.loading = "eager";
       image.appendChild(img);
+      enableMediaFade(img);
     }
 
     const prev = card.querySelector(".card-slideshow__prev");
@@ -1205,25 +1261,39 @@ function dismissPageLoader() {
   }, 700);
 }
 
-function revealPageWhenMediaReady(selector, { timeoutMs = 20000 } = {}) {
-  const media = document.querySelectorAll(selector);
+function setupLazyMediaFade(selector, { criticalCount = 4, timeoutMs = 10000 } = {}) {
+  const media = [...document.querySelectorAll(selector)];
   if (!media.length) {
     dismissPageLoader();
     return;
   }
 
+  media.forEach((el, index) => {
+    const isCritical = index < criticalCount;
+    if (el.tagName === "IMG") {
+      el.loading = isCritical ? "eager" : "lazy";
+      if (index < 2) el.fetchPriority = "high";
+    } else if (el.tagName === "VIDEO" && !isCritical) {
+      el.preload = "metadata";
+    }
+    enableMediaFade(el);
+  });
+
   Promise.race([
-    Promise.all([...media].map(waitForMedia)),
+    Promise.all(media.slice(0, criticalCount).map(waitForMedia)),
     new Promise((resolve) => setTimeout(resolve, timeoutMs)),
   ]).then(dismissPageLoader);
 }
 
 if (document.querySelector(".project-grid")) {
-  revealPageWhenMediaReady(
-    ".project-grid .card-image img, .project-grid .card-image video"
+  setupLazyMediaFade(
+    ".project-grid .card-image img, .project-grid .card-image video",
+    { criticalCount: 4 }
   );
 } else if (document.querySelector(".archive-grid")) {
-  revealPageWhenMediaReady(".archive-grid img, .archive-grid video");
+  setupLazyMediaFade(".archive-grid img, .archive-grid video", {
+    criticalCount: 6,
+  });
 } else {
   dismissPageLoader();
 }

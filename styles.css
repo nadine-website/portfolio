@@ -643,6 +643,15 @@ body.is-project .main {
   pointer-events: none;
 }
 
+.media-fade {
+  opacity: 0;
+  transition: opacity var(--fade-duration) var(--motion-ease);
+}
+
+.media-fade.is-loaded {
+  opacity: 1;
+}
+
 video::-webkit-media-controls {
   display: none !important;
 }
@@ -819,7 +828,7 @@ body.is-archive .page-shell {
   margin-bottom: clamp(0.45rem, 1vw, 0.75rem);
   min-width: 0;
   overflow: hidden;
-  background: transparent;
+  background: #f3f3f3;
   cursor: zoom-in;
 }
 
@@ -862,5 +871,9 @@ body.is-archive .page-shell {
 @media (prefers-reduced-motion: reduce) {
   :root {
     --fade-duration: 0.01s;
+  }
+
+  .media-fade {
+    transition: none;
   }
 }
